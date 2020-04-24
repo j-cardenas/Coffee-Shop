@@ -47,8 +47,8 @@ class MenuItemList
 
 
 };
-
-//******Strict Style**********
+/////////////////////////////////////////////////////////////////////////////////////////////
+//******Struct Style**********
 //function definitions
 void populateMenu(vector<MenuItem> &entireMenu)
 {
@@ -87,9 +87,23 @@ void populateMenu(vector<MenuItem> &entireMenu)
 
 
 }
+//****Struct Style***
+void showMenu(vector<MenuItem> &m)
+{
+  cout << fixed << setprecision(2);//set doubles to 2 decimal places
+  cout << "DrT's Effcient Menu" << endl; 
+  cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
+  for(int i = 0; i < m.size(); i++)
+  {
+    cout << m[i].addLetter << ")" << setw(10) << m[i].name 
+    << setw(5) << "$" << m[i].itemCost << setw(5) << "(" << m[i].removeLetter
+    << ")" << setw(7) << m[i].count << setw(13) << m[i].desc 
+    <<endl; 
+  }
 
+}
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 //***Class Style***********
 void populateObjectMenu(vector<MenuItemList> &entireMenu)
@@ -115,49 +129,37 @@ void populateObjectMenu(vector<MenuItemList> &entireMenu)
   vector<string> defaultMenuNames = {"Green Tea", "Black Tea", "Coffee", "Cappucino", "Macchiato", "Frappucino", "Espresso Shot"}; 
   vector<char> defaultAddLetters = {'A', 'B', 'C', 'D', 'E', 'F', 'G'}; 
   vector<char> defaultRemoveLetters = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}; 
-
+  vector<string> defaultDesc= {"Decaf","Decaf","95 mg","160 mg","120 mg","100 mg","112 mg"};
+  vector <double> defaultPrice = {2.95, 2.50, 2.95,4.95,4.95,5.50,0.95};
   for(int i = 0; i < numItems; i++)
   {
     //add each item to the default list efficiently 
     entireMenu[i].setName(defaultMenuNames[i]); 
     entireMenu[i].setAddLetter (defaultAddLetters[i]); 
     entireMenu[i].setRemoveLetter(defaultRemoveLetters[i]); 
-    entireMenu[i].setItemCost (3.00 + i); //set a random starter cost for each item
+    entireMenu[i].setItemCost (defaultPrice[i]); 
     entireMenu[i].setCount(0); //initialze all counts to 0
-    entireMenu[i].setDesc ("delicious"); //set all default desc to "delicous"
+    entireMenu[i].setDesc (defaultDesc[i]); //set all default desc to "delicous"
   }
 
 
 }
 
-
-
-//****Struct Style***
-void showMenu(vector<MenuItem> &m)
-{
-  cout << fixed << setprecision(2);//set doubles to 2 decimal places
-  cout << "DrT's Effcient Menu" << endl; 
-  cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
-  for(int i = 0; i < m.size(); i++)
-  {
-    cout << m[i].addLetter << ")" << setw(10) << m[i].name 
-    << setw(5) << "$" << m[i].itemCost << setw(5) << "(" << m[i].removeLetter
-    << ")" << setw(7) << m[i].count << setw(13) << m[i].desc 
-    <<endl; 
-  }
-
-}
 
 //******Class Style***
 void showObjectMenu(vector<MenuItemList> &m)
 {
-  cout << fixed << setprecision(0);//set doubles to 2 decimal places
-  cout <<setw(30)<< "FW Drip Brews" << endl; 
-  cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
+  system("clear");
+  string red = "\x1b[31;1m";
+  string headerMenu = "\x1b[45;1m";
+  string reset = "\x1b[0m";
+  cout << fixed << setprecision(2);//set doubles to 2 decimal places
+  cout <<setw(28)<<red<< "FW Drip Brews" <<reset<< endl; 
+  cout <<headerMenu<< "ADD     NAME          COST     REMOVE  COUNT    Caffeine  "<<reset<<endl; 
   for(int i = 0; i < m.size(); i++)
   {
-    cout << m[i].getAddLetter()  << ")" << setw(10) << m[i].getName() 
-    << setw(5) << "$" << m[i].getItemCost() << setw(5) << "(" << m[i].getRemoveLetter()
+    cout <<" "<< m[i].getAddLetter()  << ")  " << setw(15)<<left << m[i].getName() <<right
+    << setw(3) << "$" << m[i].getItemCost() << setw(5) << "     (" << m[i].getRemoveLetter()
     << ")" << setw(7) << m[i].getCount() << setw(13) << m[i].getDesc() 
     <<endl; 
   }
@@ -267,7 +269,7 @@ int main()
   //****Class Style*******
   vector <MenuItemList> objectMenu;
   populateObjectMenu (objectMenu); //put some default values in the menu
-showObjectMenu(objectMenu); //show the initial menu on the screen
+  showObjectMenu(objectMenu); //show the initial menu on the screen
   //solve and call acceptObjectOrder void function here
 
    printTextReceipt(objectMenu);
