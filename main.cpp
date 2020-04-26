@@ -285,7 +285,7 @@ void calculateBill()
     else 
       cout << "How did you break my code?";
 
-    cout<<"\n\nYou are being redirected"<<endl;
+    cout<<"\n\nPrinting receipt"<<endl;
       sleep(5); //pause 3 seconds.
 
   }
@@ -323,7 +323,7 @@ void calculateBill()
       cout<<"Payment accepted"<<endl;
       sleep(3); //pause 3 seconds.
 
-      cout<<"You are being redirected"<<endl;
+      cout<<"Printing receipt"<<endl;
       sleep(3); //pause 3 seconds.
 
     }
@@ -357,7 +357,7 @@ void calculateBill()
       }
     }
   //display total for user's record
-    receipt << "\t\n  Subtotal: " <<subtotal<<endl;
+    receipt << "\n\t  Subtotal: " <<subtotal<<endl;
     receipt << "\t  Tax: " <<(subtotal*tax)<<endl;
     receipt << "\t  Tip: " <<tip<<endl<<endl;
     receipt << "\t  Total: "<<total<<endl;

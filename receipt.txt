@@ -3,18 +3,14 @@ Fort Worth's only hipster-free coffee shop
 ******************************************
 			Items purchased
 ******************************************
-	1	Green Tea
-	1	Black Tea
-	1	Coffee
-	1	Cappucino
-	1	Macchiato
+	3	Cappucino
 	1	Frappucino
-	
-  Subtotal: 42.65
-	  Tax: 3.51863
-	  Tip: 0
 
-	  Total: 46.1686
+	  Subtotal: 20.35
+	  Tax: 1.67888
+	  Tip: 4.07
+
+	  Total: 26.0989
 ******************************************
 	Like us on facebook @FWDripBrews
 ******************************************
