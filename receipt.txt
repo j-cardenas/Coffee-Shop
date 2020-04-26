@@ -1,1 +1,14 @@
-Green Tea
+Green Tea selected.
+2many
+Black Tea selected.
+2many
+Coffee selected.
+1many
+Cappucino selected.
+1many
+Macchiato selected.
+1many
+Frappucino selected.
+1many
+Espresso Shot selected.
+1many

@@ -1,24 +1,24 @@
-//A  Restaurant Project Struct style Dr_T Dr. Tyson McMillan 10-2-2019
+/*
+Author: Jesus Cardenas
+Date: 4/26/2020
+Teacher: Dr. Tyson McMillan
+
+A coffee shop check out menu created by translating a struct program to an object oriented
+program, then creating all functions to get input and checking out as well as printing a ticket
+*/
+
+
 
 #include <iostream>
 #include<string>
 #include<vector>
 #include<iomanip>
 #include <fstream>
+#include "Input_Validation_Extended.h"
 using namespace std; 
 
-//**********Struct Style *************
-struct MenuItem
-{
-  string name;
-  double itemCost; 
-  string desc; 
-  char addLetter; 
-  char removeLetter;
-  int count; 
-};
 
-//********Class Style***********
+//Creating a class for menu items
 class MenuItemList
 {
   private:
@@ -47,69 +47,31 @@ class MenuItemList
 
 
 };
-/////////////////////////////////////////////////////////////////////////////////////////////
-//******Struct Style**********
-//function definitions
-void populateMenu(vector<MenuItem> &entireMenu)
-{
-  //put some default values in our Menu
-  const int numItems = 7; 
-  MenuItem Item1; 
-  MenuItem Item2;
-  MenuItem Item3; 
-  MenuItem Item4;
-  MenuItem Item5;
-  MenuItem Item6;
-  MenuItem Item7;    
 
-  entireMenu.push_back(Item1); //add to the end of list the Item1
-  entireMenu.push_back(Item2); //add to the end of list the Item2
-  entireMenu.push_back(Item3); //add to the end of list the Item3
-  entireMenu.push_back(Item4); //add to the end of list the Item4
-  entireMenu.push_back(Item5); //add to the end of list the Item5
-  entireMenu.push_back(Item6); //add to the end of list the Item6
-  entireMenu.push_back(Item7); //add to the end of list the Item7
+//Global variables for color
+ 
+  string headerRed = "\x1b[31;1m";
+  string headerMenu = "\x1b[45;1m";
+  string reset = "\x1b[0m";
+  string errorColor = "\x1b[41;1m";
+  string red = "\x1b[" + to_string(32) + ";"+to_string(91)+"m";
 
-  vector<string> defaultMenuNames = {"Green Tea", "Black Tea", "Coffee", "Cappucino", "Macchiato", "Frappucino", "Espresso Shot"}; 
-  vector<char> defaultAddLetters = {'A', 'B', 'C', 'D', 'E', 'F', 'G'}; 
-  vector<char> defaultRemoveLetters = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}; 
+//Global variable for user option and sub-total
+  double total = 0.0;
+  double subtotal = 0.0; 
+  double const tax = 0.0825;
+  double tip = 0.0;
+  double payment=0.0;
+ 
 
-  for(int i = 0; i < numItems; i++)
-  {
-    //add each item to the default list efficiently 
-    entireMenu[i].name = defaultMenuNames[i]; 
-    entireMenu[i].addLetter = defaultAddLetters[i]; 
-    entireMenu[i].removeLetter = defaultRemoveLetters[i]; 
-    entireMenu[i].itemCost = (3.00 + i); //set a random starter cost for each item
-    entireMenu[i].count = 0; //initialze all counts to 0
-    entireMenu[i].desc = "delicious"; //set all default desc to "delicous"
-  }
+  
 
 
-}
-//****Struct Style***
-void showMenu(vector<MenuItem> &m)
-{
-  cout << fixed << setprecision(2);//set doubles to 2 decimal places
-  cout << "DrT's Effcient Menu" << endl; 
-  cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
-  for(int i = 0; i < m.size(); i++)
-  {
-    cout << m[i].addLetter << ")" << setw(10) << m[i].name 
-    << setw(5) << "$" << m[i].itemCost << setw(5) << "(" << m[i].removeLetter
-    << ")" << setw(7) << m[i].count << setw(13) << m[i].desc 
-    <<endl; 
-  }
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-//***Class Style***********
+//Creating menu items using vectors
 void populateObjectMenu(vector<MenuItemList> &entireMenu)
 {
   //put some default values in our Menu
-  const int numItems = 7; 
+  const int numItems = 7; //Number of menu items
   MenuItemList Item1;  //Item1 is an object
   MenuItemList Item2;
   MenuItemList Item3; 
@@ -119,18 +81,29 @@ void populateObjectMenu(vector<MenuItemList> &entireMenu)
   MenuItemList Item7;    
 
   entireMenu.push_back(Item1); //add to the end of list the Item1
-  entireMenu.push_back(Item2); //add to the end of list the Item2
-  entireMenu.push_back(Item3); //add to the end of list the Item3
-  entireMenu.push_back(Item4); //add to the end of list the Item4
-  entireMenu.push_back(Item5); //add to the end of list the Item5
-  entireMenu.push_back(Item6); //add to the end of list the Item6
-  entireMenu.push_back(Item7); //add to the end of list the Item7
+  entireMenu.push_back(Item2); 
+  entireMenu.push_back(Item3); 
+  entireMenu.push_back(Item4); 
+  entireMenu.push_back(Item5); 
+  entireMenu.push_back(Item6); 
+  entireMenu.push_back(Item7); 
 
+  //Menu Item Names
   vector<string> defaultMenuNames = {"Green Tea", "Black Tea", "Coffee", "Cappucino", "Macchiato", "Frappucino", "Espresso Shot"}; 
+  
+  //Menu Add choices
   vector<char> defaultAddLetters = {'A', 'B', 'C', 'D', 'E', 'F', 'G'}; 
+
+  //Menu Remove letter choices
   vector<char> defaultRemoveLetters = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}; 
+
+  //Caffeine level
   vector<string> defaultDesc= {"Decaf","Decaf","95 mg","160 mg","120 mg","100 mg","112 mg"};
+
+  //Prices
   vector <double> defaultPrice = {2.95, 2.50, 2.95,4.95,4.95,5.50,0.95};
+  
+  //Loop to add all values into vector
   for(int i = 0; i < numItems; i++)
   {
     //add each item to the default list efficiently 
@@ -145,20 +118,16 @@ void populateObjectMenu(vector<MenuItemList> &entireMenu)
 
 }
 
-
-//******Class Style***
+//Menu visible to user
 void showObjectMenu(vector<MenuItemList> &m)
 {
   system("clear");
-  string red = "\x1b[31;1m";
-  string headerMenu = "\x1b[45;1m";
-  string reset = "\x1b[0m";
   cout << fixed << setprecision(2);//set doubles to 2 decimal places
-  cout <<setw(28)<<red<< "FW Drip Brews" <<reset<< endl; 
+  cout <<setw(28)<<headerRed<< "FW Drip Brews" <<reset<< endl; 
   cout <<headerMenu<< "ADD     NAME          COST     REMOVE  COUNT    Caffeine  "<<reset<<endl; 
   for(int i = 0; i < m.size(); i++)
   {
-    cout <<" "<< m[i].getAddLetter()  << ")  " << setw(15)<<left << m[i].getName() <<right
+    cout <<headerMenu<<" "<< m[i].getAddLetter()  << ")"<<reset<<"  " << setw(15)<<left << m[i].getName() <<right
     << setw(3) << "$" << m[i].getItemCost() << setw(5) << "     (" << m[i].getRemoveLetter()
     << ")" << setw(7) << m[i].getCount() << setw(13) << m[i].getDesc() 
     <<endl; 
@@ -167,112 +136,283 @@ void showObjectMenu(vector<MenuItemList> &m)
 }
 
 
-
-void acceptOrder(vector<MenuItem> &m)
+//Function to obtain the menu order.
+void acceptObjectOrder(vector<MenuItemList> &m)
 {
   char option = '\0';// the user-selected menu item
-  double subtotal = 0.0; 
-
+  //Obtaining menu order from user.
   do
   {
-    cout << "\nPlease choose an item (x to Exit): ";
+    
+    cout << red << "\n(X TO PLACE ORDER)"<<reset<<" \nPlease choose an item : ";
     cin >> option; 
 
-    for(int i=0; i < m.size(); i++)
+    for(int i=0; i <m.size(); i++)
     {
-      if(option == m[i].addLetter)
+      if(option == m[i].getAddLetter())
       {
-        cout << "\nMenu Item " << m[i].addLetter << " selected."; 
-        m[i].count++; //increment the count by 1
+        cout << "\nMenu Item " << m[i].getAddLetter() << " selected."; 
+        int addCounter= m[i].getCount()+1;
+        m[i].setCount(addCounter); //increment the count by 1
         cout << "\033[2J\033[1;1H"; //clear screen 
-        cout << "\n1 UP on " << m[i].name << endl;
-        subtotal += m[i].itemCost; //increment the subtotal by the cost of the item 
-        showMenu(m); //show the updated menu
+        cout << "\n1 UP on " << m[i].getName() << endl;
+        subtotal += m[i].getItemCost(); //increment the subtotal by the cost of the item 
+        showObjectMenu(m); //show the updated menu
         cout << "\nSubtotal: $" << subtotal << endl;  
       }
-      else if(option == m[i].removeLetter)
+      else if(option == m[i].getRemoveLetter())
       {
-        cout << "\nRemove Item " << m[i].removeLetter << " selected."; 
-        if(m[i].count > 0) //subtract if and only if the count is > 0
+        
+        if(m[i].getCount() > 0) //subtract if and only if the count is > 0
         {
-          m[i].count--; //decrement the count by 1
+          int removeCounter = m[i].getCount()-1;
+          m[i].setCount(removeCounter); //decrement the count by 1
           cout << "\033[2J\033[1;1H"; //clear screen 
-          cout << "\n1 DOWN on " << m[i].name << endl;
-          subtotal -= m[i].itemCost; //decrement the subtotal by the cost of the item
-          showMenu(m); //show the updated menu
+          cout << "\n1 DOWN on " << m[i].getName() << endl;
+          subtotal -= m[i].getItemCost(); //decrement the subtotal by the cost of the item
+          showObjectMenu(m); //show the updated menu
           cout << "\nSubtotal: $" << subtotal << endl;  
         }
         else //the the user why you blocked item removal 
         {
             
-            cout << "\nItem count must be > 0 to remove: " << m[i].name << endl;
+            cout << errorColor<<"Item count must be > 0 to remove: " << m[i].getName() <<reset<< endl;
         }
       }
       else if(
-                option != m[i].addLetter && 
-                option != m[i].removeLetter &&
+                option != m[i].getAddLetter() && 
+                option != m[i].getRemoveLetter() &&
                 option != 'x' &&
                 option != 'X' 
             ) //test for all of my valid inputs
             {
               if(i == 0)
               {
-                cout << "\nInvalid input (" << option << "). Please try again." << endl; 
+                cout <<errorColor<< "\nInvalid input (" << option << "). Please try again." <<reset<<endl; 
               }  
             }
     }
   }while(option != 'x' && option != 'X'); 
-  cout << "\nThank you for placing your order." << endl; 
-  //handle the tip process here
-  //calculate total due + tax + tip
-  //accept payment type
-  //handle cash vs credit
+  
+  system("clear");
+}
+
+void tipProcess()
+{
+  int tipOption;
+  
+ 
+    cout<<headerMenu <<"        Would you like to leave a tip?        "<<reset<<endl;
+    cout<<setw(5)<<"(0)"<<setw(10)<<" (1) "<<setw(10)<<" (2) "<<setw(10)<<" (3) "<<setw(10)<<"(4)  "<<endl;
+    cout<<setw(5)<<"0%"<<setw(10)<<" 15% "<<setw(10)<<" 20% "<<setw(10)<<" 25% "<<setw(10)<<"custom"<<endl;
+    cout<<setprecision(2)<<setw(5)<<"0 "<<setw(10)<<(subtotal*.15)<<setw(10)<<(subtotal*.20)<<setw(10)<<(subtotal*.25)<<endl<<endl;
+
+    do
+    {
+      cout<< "Please make a selection ("<<red<<"0,1,2,3,4"<<reset<<"): "<<red;
+      tipOption = validateInt(tipOption); //Verifing that the user uses an int
+      cout<<reset;
+      
+
+    
+         //if loop to check user tip selection
+          if (tipOption==0){tip=0.0;}
+          else if  (tipOption==1){tip=subtotal*.15;}
+          else if  (tipOption==2){tip=subtotal*.20;}
+          else if  (tipOption==3){tip=subtotal*.25;}
+          else if  (tipOption==4){  
+                                      int customTip;
+                                      cout<<"\nWhat percentage would you like to leave? (whole number)"<<endl;
+                                      customTip=validateInt(customTip);
+            
+                                      tip=(customTip/100.0)*subtotal;}
+            else {
+                  cout<<errorColor<<"That's not a valid answer."<<reset<<endl<<endl;
+
+                 }
+
+    } while(tipOption != 0 && tipOption != 1 && tipOption != 2 && tipOption != 3 && tipOption != 4);
+
+
+
+}
+
+void calculateBill()
+{
+
+  system("clear");
+  cout<<headerMenu <<"               Total Due               "<<reset<<endl;
+  
+  cout << "\n  Subtotal: " <<subtotal<<endl;
+  cout << "  Tax: " <<(subtotal*tax)<<endl;
+  cout << "  Tip: " <<tip<<endl<<endl;
+  cout << "  Total: "<<total<<endl;
+
+
+}
+
+
+
+  ////////accept payment type//////////////
+  void cashFunction()
+  {
+    
+    system ("clear");
+    cout<<headerMenu<<"     What is the tendered amount?     "<<reset<<endl;
+    cout <<" $ ";
+    payment = validateDouble(payment);
+
+    //Making sure we are paid fully.
+    while (payment<total)
+       {
+
+         cout <<"\nAn amount of $"<<red<< (total-payment)<<reset<<" is due. ";
+         cout<<"\nWhat is the "<<red<<"NEW"<<reset<< " total tendered amount? ";
+         payment = validateDouble(payment);
+       }
+    
+    //If user paid more than owed, then this will run.
+    if (payment> total)
+      {
+        cout <<"\nYour change is: " <<red<<(payment-total)<<reset<<endl;
+      }
+    else if (payment == total)
+     {
+      cout <<"\nThank you for your business.";
+     }
+    else 
+      cout << "How did you break my code?";
+
+
+  }
+
+
+
+  
+  void creditFunction () 
+    {
+      string creditCard;
+      system ("clear");
+      cout <<headerMenu<< "                   Credit Card                  "<<reset<<endl;
+      cout << "Please type the 16 digits on the front of the CC"<<endl;
+      cout<<red<<"#";
+      cin >> creditCard;
+      cout<<reset;
+      while (creditCard.length()!=16)
+      {
+
+        cout <<"\nYou entered a wrong credit card number, please try again."<<endl;
+        cout<<red<<"#";
+        cin >> creditCard;
+        cout<<reset;
+      }
+
+    }
+
+
+
   //handle on-screen recipt generation here
-  //handle on the text file reciept generation here
+  void printTextReceipt(vector<MenuItemList> &m)
+  {
+    fstream receipt;
+    receipt.open("receipt.txt",ios::out);
+
+      for(int i = 0; i < m.size(); i++)
+  {
+    
+      if(m[i].getCount()>0)
+      {
+        receipt << m[i].getName() << " selected."<<endl;
+        receipt << m[i].getCount() <<"many"<<endl;
+       
+      }
+        
+  }
+
+    receipt.close();
+
+
+    /*fstream html;
+    html.open("index.html",ios::out);
+    html<< "<html><head><title>Cool</title></head>";
+    html <<"<body style =\"background-color:#000000; color: #FFFFFF;\">";
+    html << "<h1>"<< m[6].getName() <<endl;
+    html << "</body></html>";
+    html.close();
+    */
+    
+  }
+//handle on the text file reciept generation here
+
   //loop the program, reset item counts and toatl due
   //until exit
-}
 
-void printTextReceipt(vector<MenuItemList> &m)
+
+void dItemList(vector<MenuItemList> &m)
 {
-  fstream receipt;
-  receipt.open("receipt.txt",ios::out);
-
-  receipt << m[0].getName() <<endl;
-
-  receipt.close();
-
-
-  fstream html;
-  html.open("index.html",ios::out);
-  html<< "<html><head><title>Cool</title></head>";
-  html <<"<body style =\"background-color:#000000; color: #FFFFFF;\">";
-  html << "<h1>"<< m[0].getName() <<endl;
-  html << "</body></html>";
-  html.close();
 
 }
 
 
 
+
+
+
+
+
+/********************Main function*************************/
 int main() 
 {
 
-
-  /***Struct Style ******
-  vector<MenuItem> wholeMenu; 
-  populateMenu(wholeMenu); //put some default values in the menu
-  showMenu(wholeMenu); //print the current data of the menu on screen 
-  acceptOrder(wholeMenu); 
-  */
-
-  //****Class Style*******
+  int payOption;
   vector <MenuItemList> objectMenu;
   populateObjectMenu (objectMenu); //put some default values in the menu
   showObjectMenu(objectMenu); //show the initial menu on the screen
-  //solve and call acceptObjectOrder void function here
+  acceptObjectOrder(objectMenu);//Function that obtains the user's order
+  tipProcess();  //Function that asks and calculates tip
+ 
+  //Calculating total by calling global variables
+  total = (subtotal*tax)+ subtotal + tip;
 
-   printTextReceipt(objectMenu);
+  //function that calculates the bill and displays it for the user.
+  calculateBill();
+ 
+  //Obtaining payment method from user
+    cout <<headerMenu<< "\n\n      How would you like to pay?       "<<reset<<endl<<endl
+        << "(1) Cash " <<endl
+        << "(2) Credit Card"<<endl;
 
+    cout << "Choice:";
+    payOption = validateInt(payOption);
+
+    if (payOption == 1) {cashFunction(); }
+    else if (payOption ==2) {creditFunction(); }
+    else {
+      
+        do 
+        {
+              if (payOption == 1) {cashFunction(); }
+              else if (payOption ==2) {creditFunction(); }
+                else {
+              cout <<endl<<errorColor<< "Thats not a valid choice"<<reset<<endl;
+              cout << "Please enter a valid choice";
+              payOption = validateInt(payOption);
+              }
+        } while (payOption != 1 && payOption !=2 );
+
+    }
+
+
+
+
+  
+
+  cout << "\nHave a blessed day." << endl; 
+  printTextReceipt(objectMenu);
+
+
+
+  
+  
   return 0; 
 }
