@@ -14,6 +14,7 @@ program, then creating all functions to get input and checking out as well as pr
 #include<vector>
 #include<iomanip>
 #include <fstream>
+#include <unistd.h> 
 #include "Input_Validation_Extended.h"
 using namespace std; 
 
@@ -124,6 +125,7 @@ void showObjectMenu(vector<MenuItemList> &m)
   system("clear");
   cout << fixed << setprecision(2);//set doubles to 2 decimal places
   cout <<setw(28)<<headerRed<< "FW Drip Brews" <<reset<< endl; 
+  cout<<"\t\tFort Worth's only hipster-free coffee shop"<<endl;
   cout <<headerMenu<< "ADD     NAME          COST     REMOVE  COUNT    Caffeine  "<<reset<<endl; 
   for(int i = 0; i < m.size(); i++)
   {
@@ -198,7 +200,7 @@ void acceptObjectOrder(vector<MenuItemList> &m)
 }
 
 void tipProcess()
-{
+{ cout <<setprecision(2);
   int tipOption;
   
  
@@ -239,7 +241,7 @@ void tipProcess()
 
 void calculateBill()
 {
-
+  cout <<setprecision(2);
   system("clear");
   cout<<headerMenu <<"               Total Due               "<<reset<<endl;
   
@@ -256,7 +258,7 @@ void calculateBill()
   ////////accept payment type//////////////
   void cashFunction()
   {
-    
+    cout <<setprecision(2); 
     system ("clear");
     cout<<headerMenu<<"     What is the tendered amount?     "<<reset<<endl;
     cout <<" $ ";
@@ -283,6 +285,8 @@ void calculateBill()
     else 
       cout << "How did you break my code?";
 
+    cout<<"\n\nYou are being redirected"<<endl;
+      sleep(5); //pause 3 seconds.
 
   }
 
@@ -307,6 +311,21 @@ void calculateBill()
         cout<<reset;
       }
 
+      cout<<"Contacting bank..."<<endl;
+      sleep(3); //pause 3 seconds. 
+
+      cout<<"connected..."<<endl;
+      sleep(3); //pause 3 seconds. 
+
+      cout<<"processing..."<<endl;
+      sleep(3); //pause 3 seconds. 
+
+      cout<<"Payment accepted"<<endl;
+      sleep(3); //pause 3 seconds.
+
+      cout<<"You are being redirected"<<endl;
+      sleep(3); //pause 3 seconds.
+
     }
 
 
@@ -314,44 +333,82 @@ void calculateBill()
   //handle on-screen recipt generation here
   void printTextReceipt(vector<MenuItemList> &m)
   {
+    cout <<setprecision(2);
+    //Creating and opening a txt file called receipt.txt
     fstream receipt;
     receipt.open("receipt.txt",ios::out);
 
-      for(int i = 0; i < m.size(); i++)
-  {
+    //Creating header
+     receipt<<"\t\t\tFW Drip Brews"<<endl;
+     receipt <<"Fort Worth's only hipster-free coffee shop"<<endl;
+     receipt <<"******************************************"<<endl;
+     receipt <<"\t\t\tItems purchased"<<endl;
+     receipt <<"******************************************"<<endl;
+
+    //Will check vector size and will display all purchased items
+    for(int i = 0; i < m.size(); i++)
+    {
     
       if(m[i].getCount()>0)
       {
-        receipt << m[i].getName() << " selected."<<endl;
-        receipt << m[i].getCount() <<"many"<<endl;
+        //Shows count followed by name
+        receipt <<"\t"<< m[i].getCount() <<"\t"<< m[i].getName()<<endl;
        
       }
-        
-  }
+    }
+  //display total for user's record
+    receipt << "\t\n  Subtotal: " <<subtotal<<endl;
+    receipt << "\t  Tax: " <<(subtotal*tax)<<endl;
+    receipt << "\t  Tip: " <<tip<<endl<<endl;
+    receipt << "\t  Total: "<<total<<endl;
 
+    receipt <<"******************************************"<<endl;
+    receipt<<"\tLike us on facebook @FWDripBrews"<<endl;
+    receipt <<"******************************************"<<endl;
+        
     receipt.close();
 
 
-    /*fstream html;
-    html.open("index.html",ios::out);
-    html<< "<html><head><title>Cool</title></head>";
-    html <<"<body style =\"background-color:#000000; color: #FFFFFF;\">";
-    html << "<h1>"<< m[6].getName() <<endl;
-    html << "</body></html>";
-    html.close();
-    */
-    
+        
   }
-//handle on the text file reciept generation here
 
-  //loop the program, reset item counts and toatl due
-  //until exit
+//showing the ticket to the user on the screen
+  void showReceipt(vector<MenuItemList> &m)
+  {
+    cout <<setprecision(2);
+    system("clear");
+   
 
+    //Creating header
+    cout <<setw(20)<<headerRed<< "FW Drip Brews" <<reset<< endl; 
+    cout<<"\tFort Worth's only hipster-free coffee shop"<<endl;
+    cout <<headerMenu<< "**********************************************"<<reset<<endl;
+    cout <<"\t\t\tItems purchased"<<endl;
+    cout <<headerMenu<< "**********************************************"<<reset<<endl;
 
-void dItemList(vector<MenuItemList> &m)
-{
+    //Will check vector size and will display all purchased items
+    for(int i = 0; i < m.size(); i++)
+    {
+    
+      if(m[i].getCount()>0)
+      {
+        //Shows count followed by name
+        cout <<"\t"<< m[i].getCount() <<"\t"<< m[i].getName()<<endl;
+       
+      }
+    }
+  //display total for user's record
+    cout << "\n  Subtotal: " <<subtotal<<endl;
+    cout << "  Tax: " <<(subtotal*tax)<<endl;
+    cout << "  Tip: " <<tip<<endl<<endl;
+    cout << "  Total: "<<total<<endl;
 
-}
+    cout <<headerMenu<< "**********************************************"<<reset<<endl;
+    cout<<"\t\tLike us on facebook @FWDripBrews"<<endl;
+    cout <<headerMenu<< "**********************************************"<<reset<<endl;
+       
+            
+  }
 
 
 
@@ -363,54 +420,61 @@ void dItemList(vector<MenuItemList> &m)
 /********************Main function*************************/
 int main() 
 {
-
+  cout <<setprecision(2);
   int payOption;
-  vector <MenuItemList> objectMenu;
-  populateObjectMenu (objectMenu); //put some default values in the menu
-  showObjectMenu(objectMenu); //show the initial menu on the screen
-  acceptObjectOrder(objectMenu);//Function that obtains the user's order
-  tipProcess();  //Function that asks and calculates tip
- 
-  //Calculating total by calling global variables
-  total = (subtotal*tax)+ subtotal + tip;
+  char answer = '\0';
+ do
+ {
+    vector <MenuItemList> objectMenu;
+    populateObjectMenu (objectMenu); //put some default values in the menu
+    showObjectMenu(objectMenu); //show the initial menu on the screen
+    acceptObjectOrder(objectMenu);//Function that obtains the user's order
+    tipProcess();  //Function that asks and calculates tip
+    
+    
+    //Calculating total by calling global variables
+    total = (subtotal*tax)+ subtotal + tip;
 
-  //function that calculates the bill and displays it for the user.
-  calculateBill();
- 
-  //Obtaining payment method from user
-    cout <<headerMenu<< "\n\n      How would you like to pay?       "<<reset<<endl<<endl
-        << "(1) Cash " <<endl
-        << "(2) Credit Card"<<endl;
+    //function that calculates the bill and displays it for the user.
+    calculateBill();
+    
+    //Obtaining payment method from user
+      cout << headerMenu<< "\n\n      How would you like to pay?       "<<reset<<endl<<endl
+          << "(1) Cash " <<endl
+          << "(2) Credit Card"<<endl;
 
-    cout << "Choice:";
-    payOption = validateInt(payOption);
+      cout << "Choice:";
+      payOption = validateInt(payOption);
 
-    if (payOption == 1) {cashFunction(); }
-    else if (payOption ==2) {creditFunction(); }
-    else {
+      //Calling the option needed to process payment
+        if (payOption == 1) {cashFunction(); }
+        else if (payOption ==2) {creditFunction(); }
+        else {
+          
+            do 
+            {
+                  if (payOption == 1) {cashFunction(); }
+                  else if (payOption ==2) {creditFunction(); }
+                    else {
+                  cout <<endl<<errorColor<< "Thats not a valid choice"<<reset<<endl;
+                  cout << "Please enter a valid choice";
+                  payOption = validateInt(payOption);
+                  }
+            } while (payOption != 1 && payOption !=2 );
+
+        }
+
+
+    showReceipt(objectMenu); //Showing the same text as the receipt but on screen.
+    printTextReceipt(objectMenu);
       
-        do 
-        {
-              if (payOption == 1) {cashFunction(); }
-              else if (payOption ==2) {creditFunction(); }
-                else {
-              cout <<endl<<errorColor<< "Thats not a valid choice"<<reset<<endl;
-              cout << "Please enter a valid choice";
-              payOption = validateInt(payOption);
-              }
-        } while (payOption != 1 && payOption !=2 );
 
-    }
+      cout << "\nPress E to end program." << endl; 
+      cout << "\nPress any other key to restart."<<endl;
+      cin >> answer;
+    
 
-
-
-
-  
-
-  cout << "\nHave a blessed day." << endl; 
-  printTextReceipt(objectMenu);
-
-
+  } while (answer != 'E' && answer != 'e');
 
   
   

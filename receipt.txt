@@ -1,14 +1,20 @@
-Green Tea selected.
-2many
-Black Tea selected.
-2many
-Coffee selected.
-1many
-Cappucino selected.
-1many
-Macchiato selected.
-1many
-Frappucino selected.
-1many
-Espresso Shot selected.
-1many
+			FW Drip Brews
+Fort Worth's only hipster-free coffee shop
+******************************************
+			Items purchased
+******************************************
+	1	Green Tea
+	1	Black Tea
+	1	Coffee
+	1	Cappucino
+	1	Macchiato
+	1	Frappucino
+	
+  Subtotal: 42.65
+	  Tax: 3.51863
+	  Tip: 0
+
+	  Total: 46.1686
+******************************************
+	Like us on facebook @FWDripBrews
+******************************************
